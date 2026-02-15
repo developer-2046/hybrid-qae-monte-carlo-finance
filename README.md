@@ -118,3 +118,60 @@ Produces:
 
 ## License
 MIT License (or update as needed).
+
+## Baseline results snapshot
+
+Data source: `bench_results.json` (generated 2026-02-14 18:50:50).
+Each configuration uses **R=32 independent replications**; the reported `estimate_std` is the standard deviation across replications.
+
+At the largest budget (**N=16384** paths per replication):
+
+**Asian (GBM)**
+
+| Method | Std | Improvement vs MC |
+|---|---:|---:|
+
+| MC | 0.0605 | 1.0000× |
+
+| MC+AV | 0.0429 | 1.4106× |
+
+| RQMC_Sobol | 0.0115 | 5.2594× |
+
+| RQMC_Sobol+BB | 0.0013 | 44.7944× |
+
+
+
+**Up-and-Out Barrier (GBM)**
+
+| Method | Std | Improvement vs MC |
+|---|---:|---:|
+
+| MC | 0.0429 | 1.0000× |
+
+| MC+AV | 0.0272 | 1.5779× |
+
+| RQMC_Sobol | 0.0380 | 1.1291× |
+
+| RQMC_Sobol+BB | 0.0217 | 1.9762× |
+
+
+
+**Basket Call (GBM)**
+
+| Method | Std | Improvement vs MC |
+|---|---:|---:|
+
+| MC | 0.0514 | 1.0000× |
+
+| MC+AV | 0.0177 | 2.8981× |
+
+| RQMC_Sobol | 0.0028 | 18.5904× |
+
+
+
+**Quick read:**
+
+- Asian: RQMC Sobol + Brownian bridge is ~44.8× lower estimator std than plain MC at N=16384.
+- Basket: RQMC Sobol is ~18.6× lower std than plain MC at N=16384.
+- Barrier: discontinuity hurts QMC; RQMC alone is only ~1.13×, BB helps to ~1.98× at N=16384.
+- Moral: any QAE/IQAE claim that only beats crude MC is not impressive. QMC is the benchmark you actually have to survive.
